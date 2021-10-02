@@ -1,0 +1,26 @@
+{
+  "employee": [
+    {
+      "id": 1,
+      "username": "reno",
+      "firstName": "reno",
+      "lastName": "reno",
+      "email": "eno.erno@gmail.com",
+      "birthDate": "2021-10-21",
+      "basicSalary": "1212121",
+      "status": "reno",
+      "group": "front-end",
+      "description": "des"
+    }
+  ],
+  "comments": [
+    {
+      "id": 1,
+      "body": "some comment",
+      "postId": 1
+    }
+  ],
+  "profile": {
+    "name": "typicode"
+  }
+}

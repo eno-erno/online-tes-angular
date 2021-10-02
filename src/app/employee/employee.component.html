@@ -1,0 +1,148 @@
+<app-header></app-header>
+    <section>
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <h4 class="mt-5 font-weight-bold">Employee List</h4>
+                    <button class="btn btn-sm btn-success mb-3" (click)="btnClick()" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Add Employee</button>
+                    <div *ngIf="alert" class="alert alert-success alert-dismissible fade show" role="alert">
+                        <strong>Success!</strong> Insert employee
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                    <div *ngIf="alertError" class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <strong>Success!</strong> Delete employee
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                    <div *ngIf="alertUpdate" class="alert alert-info alert-dismissible fade show" role="alert">
+                        <strong>Success!</strong> Update employee
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-stripet" id="table-employee">
+                            <thead>
+                                <tr>
+                                    <th style="vertical-align: middle;">#</th>
+                                    <th style="vertical-align: middle;">Username</th>
+                                    <th style="vertical-align: middle;">Firts Name</th>
+                                    <th style="vertical-align: middle;">Last Name</th>
+                                    <th style="vertical-align: middle;">Email</th>
+                                    <th style="vertical-align: middle; width: 20%;">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let row of getDataEmployee; let i = index">
+                                    <th>{{ i + 1 }}</th>
+                                    <td>{{ row.username.toLowerCase() }}</td>
+                                    <td>{{ row.firstName.toLowerCase() }}</td>
+                                    <td>{{ row.lastName.toLowerCase() }}</td>
+                                    <td>{{ row.email.toLowerCase() }}</td>
+                                    <td>
+                                        <button class="btn btn-sm btn-danger" (click)="deleteAllEmployee(row)">Delete</button>
+                                        <button class="btn btn-sm btn-primary mx-1" (click)="updateAllEmployee(row)" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Update</button>
+                                        <button class="btn btn-sm btn-info" (click)="getByOneAllEmployee(row)" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Detail</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable modal-lg" style="margin-top: 5rem;">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h5 class="modal-title" id="staticBackdropLabel">Add New Employee</h5>
+            <button type="button" class="btn-close" id="closeModal" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form [formGroup]="formValue">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-12 col-sm-6">
+                            <div class="form-floating mb-3">
+                                <input formControlName="username" 
+                                class="form-control" type="text" id="floatingInput" placeholder="Username">
+                                <label for="floatingInput">Username</label>
+                                <!-- <span class="text-danger float-end d-block mb-2">Username is Required</span> -->
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-6">
+                            <div class="form-floating mb-3">
+                                <input formControlName="firstName" type="text" class="form-control" id="floatingInput" placeholder="First Name">
+                                <label for="floatingInput">First Name</label>
+                                <!-- <span class="text-danger float-end d-block mb-2">First Name is Required</span> -->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 col-sm-6">
+                            <div class="form-floating mb-3">
+                                <input formControlName="lastName" type="text" class="form-control" id="floatingInput" placeholder="Last Name">
+                                <label for="floatingInput">Last Name</label>
+                                <!-- <span class="text-danger float-end d-block mb-2">Last Name is Required</span> -->
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-6">
+                            <div class="form-floating mb-3">
+                                <input formControlName="email" type="email" class="form-control" id="floatingInput" placeholder="Email">
+                                <label for="floatingInput">Email</label>
+                                <!-- <span class="text-danger float-end d-block mb-2">Email is Required, format email.</span> -->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 col-sm-6">
+                            <div class="form-floating mb-3">
+                                <input formControlName="birthDate" type="date" class="form-control" id="floatingInput" placeholder="Birth Date">
+                                <label for="floatingInput">Birth Date</label>
+                                <!-- <span class="text-danger float-end d-block mb-2">Birth Date is Required.</span> -->
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-6">
+                            <div class="form-floating mb-3">
+                                <input formControlName="basicSalary" type="text" class="form-control" id="floatingInput" placeholder="Salary">
+                                <label for="floatingInput">Salary</label>
+                                <!-- <span class="text-danger float-end d-block mb-2">Salary is Required, only number.</span> -->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 col-sm-6">
+                            <div class="form-floating mb-3">
+                                <input formControlName="status" type="text" class="form-control" id="floatingInput" placeholder="Meried / No Meried">
+                                <label for="floatingInput">Status (Meried / No Meried)</label>
+                                <!-- <span class="text-danger float-end d-block mb-2">Status is Required.</span> -->
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-6">
+                            <div class="form-floating">
+                                <select formControlName="group" id="" class="form-select" id="floatingSelectGrid" aria-label="Floating label select example">
+                                  <option selected>Select Group</option>
+                                  <option *ngFor="let list of optionGroup" [ngValue]="list.id">{{list.value}}</option>
+                                </select>
+                                <label for="floatingSelectGrid">Group</label>
+                            </div>
+                            <!-- <span class="text-danger float-end d-block mb-2">Group is Required.</span> -->
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="form-floating">
+                                <textarea  formControlName="description" class="form-control" placeholder="Description" id="floatingTextarea"></textarea>
+                                <label for="floatingTextarea">Description</label>
+                                <!-- <span class="text-danger float-end d-block mb-2">Description is Required.</span> -->
+                            </div>
+                        </div>
+                        <div class="col-12 mt-3">
+                            <button class="btn btn-sm btn-success float-end" *ngIf="showAdd" (click)="postEmployeeDetails()">Save</button>
+                            <button class="btn btn-sm btn-success float-end" *ngIf="showUpdate" (click)="updateEmployeeDetails()">Update</button>
+                            <button type="button" class="btn btn-secondary float-end" *ngIf="showDetail" data-bs-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        </div>
+    </div>
+<app-footer></app-footer>
