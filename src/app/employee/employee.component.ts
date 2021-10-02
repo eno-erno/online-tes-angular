@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { EmployeeModel } from './employee.model';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ApiService } from '../service/api.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-employee',
@@ -19,7 +20,7 @@ export class EmployeeComponent implements OnInit {
   alertUpdate : boolean = false;
 
   employeeModel : EmployeeModel = new EmployeeModel();
-  constructor(private formBuilder : FormBuilder, private api : ApiService) { }
+  constructor(private formBuilder : FormBuilder, private api : ApiService,private router : Router) { }
   optionGroup: any = [
                     {'id' : 'front-end','value':'Front End'},
                     {'id' : 'back-end','value':'Back End'}

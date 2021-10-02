@@ -1,0 +1,37 @@
+<app-header></app-header>
+    <section>
+        <div class="container py-5">
+            <div class="row">
+                <div class="col-12 col-sm-5 mx-sm-auto">
+                    <div class="card">
+                        <div class="card-header">
+                          Login
+                        </div>
+                        <div class="card-body">
+                          <blockquote class="blockquote mb-0">
+                            <div *ngIf="alertError" class="alert alert-danger alert-dismissible fade show" role="alert">
+                                <strong>Failed! </strong>{{message}}
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
+                            <form [formGroup]="formValue">
+                                <div class="form-floating mb-4">
+                                    <input type="email" formControlName="email" class="form-control" id="floatingInputGrid" placeholder="Email" value="">
+                                    <label for="floatingInputGrid">Email</label>
+                                </div>
+                                <div class="form-floating">
+                                    <input type="password" formControlName="password" class="form-control" id="floatingInputGrid" placeholder="Password" value="">
+                                    <label for="floatingInputGrid">Password</label>
+                                </div>
+                                <div class="text-center d-grid gap-2 mt-3">
+                                    <button class="btn btn-primary" (click)="postLogin()" type="button">Button</button>
+                                </div>
+                            </form>
+                          </blockquote>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </section>
+<app-footer></app-footer>
