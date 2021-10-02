@@ -1,35 +1,10 @@
-# OnlineTestAngular
+## Cara menjalankan project Angular
+Install global angular `npm install -g @angular/cli`
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 12.2.5.
+Install Angular Project By package.json `npm install`
 
-## Development server
-
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
-
-## Code scaffolding
-
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
-
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
-
-
-
-## Cara menjalankan project
-
+Untuk Menjalankan `ng serve`
+## Cara menjalankan project Server Local db.json
 ketikkan `npm install -g json-serve` pada local project untuk menginstall server local.
 
 Setelah proses `npm install -g json-serve` ketikkan `json-server --watch db.json` untuk menjalankan, dengan otomatis berjalan di localhost:3000
