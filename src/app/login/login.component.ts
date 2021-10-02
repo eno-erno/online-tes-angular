@@ -13,7 +13,7 @@ export class LoginComponent implements OnInit {
   message : any = '';
 
   constructor(private formBuilder : FormBuilder,private router : Router) { }
-  usersData = {"email":"eno.erno@gmail.com","password":"qwerty"}
+  usersData = {"email":"eno.erno@gmail.com","password":"qwerty","name":"Hernowo"}
   ngOnInit(): void {
     this.formValue = this.formBuilder.group({
       email : [''],
