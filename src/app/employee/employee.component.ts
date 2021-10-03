@@ -18,15 +18,23 @@ export class EmployeeComponent implements OnInit {
   alert : boolean = false;
   alertError : boolean = false;
   alertUpdate : boolean = false;
-  pagingStatus : boolean = false;
 
   p : number = 1;
 
   employeeModel : EmployeeModel = new EmployeeModel();
   constructor(private formBuilder : FormBuilder, private api : ApiService,private router : Router) { }
   optionGroup: any = [
-                    {'id' : 'front-end','value':'Front End'},
-                    {'id' : 'back-end','value':'Back End'}
+                    {'label' : 'front-end','value':'Front End'},
+                    {'label' : 'back-end','value':'Back End'},
+                    {'label' : 'akuntansi','value':'Akuntansi'},
+                    {'label' : 'teknisi','value':'Teknisi'},
+                    {'label' : 'admin','value':'Admin'},
+                    {'label' : 'dev-ops','value':'Dev Ops'},
+                    {'label' : 'q-a','value':'QA'},
+                    {'label' : 'analis','value':'Analis'},
+                    {'label' : 'ui-ux','value':'UI/UX'},
+                    {'label' : 'designer','value':'Designer'},
+                    {'label' : 'web-design','value':'Web Design'},
                   ];
 
   ngOnInit(): void {
@@ -68,31 +76,31 @@ export class EmployeeComponent implements OnInit {
   }
 
   postEmployeeDetails(){
-    this.globalSetValue();
-    this.api.postEmployee(this.employeeModel)
-    .subscribe((res: any)=>{
-      let closeModal = document.getElementById('closeModal');
-      closeModal?.click();
-      this.formValue.reset()
-      this.getAllEmployee()
-      this.alert = true;
-      setTimeout(() => {
-        this.alert = false;
-      },2500)
-    },
-    (err: any)=>{
-      alert('error')
-    })
+    if(this.validationEmpty()){
+      alert('Please input form');
+    }else{
+      this.globalSetValue();
+      this.api.postEmployee(this.employeeModel)
+      .subscribe((res: any)=>{
+        let closeModal = document.getElementById('closeModal');
+        closeModal?.click();
+        this.formValue.reset()
+        this.getAllEmployee()
+        this.alert = true;
+        setTimeout(() => {
+          this.alert = false;
+        },2500)
+      },
+      (err: any)=>{
+        alert('error')
+      })
+    }
   }
 
   getAllEmployee(){
     this.api.getEmployee()
     .subscribe((res : any)=>{
       this.getDataEmployee = res;
-      if(res.length > 0)
-        this.pagingStatus = true;
-      else
-        this.pagingStatus = false;
     })
   }
 
@@ -127,18 +135,22 @@ export class EmployeeComponent implements OnInit {
   }
 
   updateEmployeeDetails(){
-    this.globalSetValue();
-    this.api.updateEmployee(this.employeeModel,this.employeeModel.id)
-    .subscribe(res=>{
-      let closeModal = document.getElementById('closeModal');
-      closeModal?.click();
-      this.formValue.reset()
-      this.getAllEmployee()
-      this.alertUpdate = true;
-      setTimeout(() => {
-        this.alertUpdate = false;
-      },2500)
-    })
+    if(this.validationEmpty()){
+      alert('Please input form');
+    }else{
+      this.globalSetValue();
+      this.api.updateEmployee(this.employeeModel,this.employeeModel.id)
+      .subscribe(res=>{
+        let closeModal = document.getElementById('closeModal');
+        closeModal?.click();
+        this.formValue.reset()
+        this.getAllEmployee()
+        this.alertUpdate = true;
+        setTimeout(() => {
+          this.alertUpdate = false;
+        },2500)
+      })
+    }
   }
 
   btnClick(){
@@ -147,4 +159,35 @@ export class EmployeeComponent implements OnInit {
     this.showUpdate = false;
     this.showDetail = false;
   }
+
+  numberOnly(event : any): boolean {
+    const charCode = (event.which) ? event.which : event.keyCode;
+    if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+      return false;
+    }
+    return true;
+  }
+
+  validationEmpty(){
+    const {username,firstName,lastName,email,birthDate,basicSalary,status,group,description} = this.formValue.value;
+    if(username === null || firstName === null || lastName  === null || email  === null || birthDate  === null || basicSalary  === null || status  === null || group  === null || description === null){
+      return true;
+    }else{
+      return false;
+    }
+  }
+  formatRupiah(angka:any){
+    var number_string = angka.replace(/[^,\d]/g, '').toString();
+    var split           = number_string.split(',');
+    var sisa            = split[0].length % 3;
+    var rupiah          = split[0].substr(0, sisa);
+    var ribuan          = split[0].substr(sisa).match(/\d{3}/gi);
+    if(ribuan){
+        var separator = sisa ? '.' : '';
+        rupiah += separator + ribuan.join('.');
+    }
+    var spr = ',';
+    rupiah = split[1] != undefined ? rupiah + spr + split[1] : rupiah;
+    return rupiah;
+}
 }
