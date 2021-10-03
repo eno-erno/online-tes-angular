@@ -8,3 +8,7 @@ Untuk Menjalankan `ng serve`
 ketikkan `npm install -g json-serve` pada local project untuk menginstall server local.
 
 Setelah proses `npm install -g json-serve` ketikkan `json-server --watch db.json` untuk menjalankan, dengan otomatis berjalan di localhost:3000
+
+## Login akses
+username : eno.erno@gmail.com  
+password : qwerty
