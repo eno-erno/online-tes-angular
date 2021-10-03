@@ -18,24 +18,22 @@
                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
                     <div class="table-responsive">
-                        <table class="table table-stripet" id="table-employee">
+                        <!-- <table class="table table-stripet" id="table-employee">
                             <thead>
                                 <tr>
                                     <th style="vertical-align: middle;">#</th>
                                     <th style="vertical-align: middle;">Username</th>
-                                    <th style="vertical-align: middle;">Firts Name</th>
-                                    <th style="vertical-align: middle;">Last Name</th>
                                     <th style="vertical-align: middle;">Email</th>
-                                    <th style="vertical-align: middle; width: 20%;">Action</th>
+                                    <th style="vertical-align: middle;">Salary</th>
+                                    <th style="vertical-align: middle;">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr *ngFor="let row of getDataEmployee; let i = index">
                                     <th>{{ i + 1 }}</th>
                                     <td>{{ row.username.toLowerCase() }}</td>
-                                    <td>{{ row.firstName.toLowerCase() }}</td>
-                                    <td>{{ row.lastName.toLowerCase() }}</td>
                                     <td>{{ row.email.toLowerCase() }}</td>
+                                    <td>{{ row.basicSalary }}</td>
                                     <td>
                                         <button class="btn btn-sm btn-danger" (click)="deleteAllEmployee(row)">Delete</button>
                                         <button class="btn btn-sm btn-primary mx-1" (click)="updateAllEmployee(row)" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Update</button>
@@ -43,7 +41,24 @@
                                     </td>
                                 </tr>
                             </tbody>
-                        </table>
+                        </table> -->
+                        <div class="list-group">
+                            <div class="list-group-item list-group-item-action"  *ngFor="let row of getDataEmployee | paginate: { itemsPerPage: 1, currentPage: p }" aria-current="true">
+                              <div class="d-flex w-100 justify-content-between">
+                                <h5 class="mb-1">Username : {{ row.username.toLowerCase() }}</h5>
+                                <small>3 days ago</small>
+                              </div>
+                              <p class="mb-1">Basic Salary : {{ row.basicSalary }}</p>
+                              <small>
+                                <span style="cursor: pointer;" class="badge bg-danger" (click)="deleteAllEmployee(row)">Delete</span>
+                                <span style="cursor: pointer;" class="badge bg-primary mx-1" (click)="updateAllEmployee(row)" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Update</span>
+                                <span style="cursor: pointer;" class="badge bg-info" (click)="getByOneAllEmployee(row)" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Detail</span>
+                              </small>
+                            </div>
+                            <div *ngIf="pagingStatus">
+                                <pagination-controls (pageChange)="p = $event"></pagination-controls>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

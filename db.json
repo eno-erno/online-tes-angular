@@ -6,9 +6,21 @@
       "firstName": "reno",
       "lastName": "reno",
       "email": "eno.erno@gmail.com",
-      "birthDate": "2021-10-21",
-      "basicSalary": "1212121",
-      "status": "reno",
+      "birthDate": "2021-10-28",
+      "basicSalary": "122222",
+      "status": "meried",
+      "group": "front-end",
+      "description": "desc"
+    },
+    {
+      "id": 2,
+      "username": "jaka",
+      "firstName": "jaka",
+      "lastName": "reno",
+      "email": "eno.erno@gmail.com",
+      "birthDate": "2021-10-14",
+      "basicSalary": "1221313",
+      "status": "meried",
       "group": "front-end",
       "description": "des"
     }

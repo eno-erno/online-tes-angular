@@ -18,6 +18,9 @@ export class EmployeeComponent implements OnInit {
   alert : boolean = false;
   alertError : boolean = false;
   alertUpdate : boolean = false;
+  pagingStatus : boolean = false;
+
+  p : number = 1;
 
   employeeModel : EmployeeModel = new EmployeeModel();
   constructor(private formBuilder : FormBuilder, private api : ApiService,private router : Router) { }
@@ -25,39 +28,21 @@ export class EmployeeComponent implements OnInit {
                     {'id' : 'front-end','value':'Front End'},
                     {'id' : 'back-end','value':'Back End'}
                   ];
-  btnClick(){
-    this.formValue.reset();
-    this.showAdd = true;
-    this.showUpdate = false;
-    this.showDetail = false;
-  }
 
   ngOnInit(): void {
-    // this.formValue = new FormGroup({
-    //   'username' : new FormControl(null, Validators.required),
-    //   'firstName' : new FormControl(null, Validators.required),
-    //   'lastName' : new FormControl(null, Validators.required),
-    //   'email' : new FormControl(null, [Validators.required, Validators.email]),
-    //   'birthDate' : new FormControl(null, Validators.required),
-    //   'basicSalary'  : new FormControl(null, [Validators.required, Validators.pattern('/^[0-9]*$/')]),
-    //   'status' : new FormControl(null, Validators.required),
-    //   'group' : new FormControl(null, Validators.required),
-    //   'description' : new FormControl(null, Validators.required)
-    // })
     this.formValue = this.formBuilder.group({
-      username : [null, [Validators.required, Validators.minLength(4)]],
-      firstName : [null, [Validators.required]],
-      lastName : [null, [Validators.required]],
-      email : [null, [Validators.required, Validators.email]],
-      birthDate : [null, [Validators.required]],
-      basicSalary  : [null, [Validators.required, Validators.pattern('/^[0-9]*$/')]],
-      status : [null, [Validators.required]],
-      group : [null, [Validators.required]],
-      description : [null, [Validators.required]]
+      username : [''],
+      firstName : [''],
+      lastName : [''],
+      email : [''],
+      birthDate : [''],
+      basicSalary  : [''],
+      status : [''],
+      group : [''],
+      description : ['']
     })
     this.getAllEmployee()
   }
-  // get username(){ return this.formValue.get('username'); }
 
   globalSetValue(){
     this.employeeModel.username = this.formValue.value.username;
@@ -104,22 +89,27 @@ export class EmployeeComponent implements OnInit {
     this.api.getEmployee()
     .subscribe((res : any)=>{
       this.getDataEmployee = res;
+      if(res.length > 0)
+        this.pagingStatus = true;
+      else
+        this.pagingStatus = false;
     })
   }
 
   deleteAllEmployee(row : any){
-    confirm('You sure delete this items?')
-    this.api.deleteEmployee(row.id)
-    .subscribe((res : any)=>{
-      this.alertError = true;
-      setTimeout(() => {
-        this.alertError = false;
-      },2500)
-      this.getAllEmployee()
-    },
-    (err: any)=>{
-      alert('error '+err)
-    })
+    if(confirm('You sure delete this items?')){
+      this.api.deleteEmployee(row.id)
+      .subscribe((res : any)=>{
+        this.alertError = true;
+        setTimeout(() => {
+          this.alertError = false;
+        },2500)
+        this.getAllEmployee()
+      },
+      (err: any)=>{
+        alert('error '+err)
+      })
+    }
   }
 
   updateAllEmployee(row : any){
@@ -149,5 +139,12 @@ export class EmployeeComponent implements OnInit {
         this.alertUpdate = false;
       },2500)
     })
+  }
+
+  btnClick(){
+    this.formValue.reset();
+    this.showAdd = true;
+    this.showUpdate = false;
+    this.showDetail = false;
   }
 }
